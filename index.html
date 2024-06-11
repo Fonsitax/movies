@@ -5,30 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Favourite Films</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="script.js" defer></script>
 </head>
 <body>
     <header id="header">
         <nav id="navbar" class="p-4 bg-gray-800 text-white">
-            <button id="startseite" class="float-right">Startseite</button>
-            <button id="journalseite" class="flex-row">Favouriten</button>
-        </nav>
-        <div id="search-bar" class="p-4 bg-yellow-300">
+            <ul class="list-none flex justify-around">
+                 <li id="startseite"><a href="index.html">Startseite</a> </li>
+                 <li id="journalseite"><a href="journal.html">Favouriten </a> </li>
+             </ul>
+         </nav>
+        <div id="search-bar" class="p-4 bg-yellow-300 text-center">
             <input type="text" id="film-search" placeholder="Filmsuche" class="p-2 border rounded">
             <button id="search-button" class="p-2 bg-blue-500 text-white rounded">Search</button>
         </div>
     </header>
-    <main id="main-content" class="w-full flex flex-col p-4">
-        <div id="display-field" class="p-4 border rounded bg-white shadow flex flex-col items-center w-full max-w-xs">
-            <ul id="container" class="list-none">
-                <li id="filmbild" class="mb-2">
-                    <img src="Movies/img/placeholder-img.jpg">
-                </li>
-                <li id="filmtitle" class="mb-2">Filmname: placeholder</li>
-                <li id="filmtext" class="mb-2">Filmtext: placehoder</li>
-                <button id="addFav" class="p-2 bg-green-500 text-white rounded">Add Fav</button>
-            </ul>
-        </div>
+    <main id="main-content" class="w-full grid grid-cols-4 gap-4">
+        
     </main>
+    <script src="script.js"></script>
 </body>
 </html>
