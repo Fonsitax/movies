@@ -36,12 +36,30 @@ for (let i = 0; i < favorites.length; i++) {
     filmOverview.classList.add("mb-2");
     film.appendChild(filmOverview);
 
+    const noticeDispaly=document.createElement("li");
+    film.appendChild(noticeDispaly);
+    if(favorites[i].notice){
+    noticeDispaly.textContent=`Ihre Notiz : ${favorites[i].notice}`;
+    }else{
+        noticeDispaly.textContent=" ";
+    }
+    noticeDispaly.classList.add("m-4");
+
     film.appendChild(noteListItem);
     film.appendChild(noteSaveListItem);
     noteListItem.appendChild(note);
     noteSaveListItem.appendChild(noteSave);
     note.placeholder = "Notiz hinzufügen";
-    note.classList.add("p-2", "h-28", "mb-4", "mt-4", "text-white", "rounded",i);
+    note.classList.add("p-2", "h-28", "mb-4", "mt-4", "rounded",i);
     noteSave.textContent = "Notiz speichern";
-    noteSave.classList.add("p-2", "bg-green-500", "text-white", "rounded",i);
+    noteSave.classList.add("p-2", "bg-green-500", "rounded",i);
+    noteSave.addEventListener("click",()=>{
+        if(!note.value){alert("Sie müssen ein Notiz schreiben !")}else{
+            let noteInput =note.value.trim();
+            favorites[i].notice=noteInput;
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+            noticeDispaly.textContent=`Ihre Notiz : ${favorites[i].notice}`;
+            alert("Sie haben ein Notiz hinzugefügt");
+        }
+    })
 }
