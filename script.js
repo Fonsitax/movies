@@ -53,11 +53,11 @@ searchButton.addEventListener("click", () => {
         film.appendChild(filmName);
         filmName.classList.add("mb-2");
 
-        filmOverview.textContent = `Overview : ${overview}`;
+        filmOverview.textContent = `Überblick : ${overview}`;
         filmOverview.classList.add("mb-2");
         film.appendChild(filmOverview);
 
-        addToFavorites.textContent = "Add 2 Fav";
+        addToFavorites.textContent = "Zu Favoriten hinzufügen";
         addToFavorites.classList.add("p-2", "bg-green-500", "text-white", "rounded",i);
         addToFavorites.addEventListener("click", () => {
             addToFavoritesHandler(i);
