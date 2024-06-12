@@ -11,7 +11,7 @@ searchButton.addEventListener("click", () => {
   main.innerHTML = '';
   let wantedFilm = searchInput.value.trim();
 
-  if(!wantedFilm){alert("You must enter name of a Movie")}else{
+  if(!wantedFilm){alert("Sie müssen ein Name eins Films eingeben !")}else{
   const options = {
     method: 'GET',
     headers: {
@@ -53,11 +53,11 @@ searchButton.addEventListener("click", () => {
         film.appendChild(filmName);
         filmName.classList.add("mb-2");
 
-        filmOverview.textContent = `Overview : ${overview}`;
+        filmOverview.textContent = `Überblick : ${overview}`;
         filmOverview.classList.add("mb-2");
         film.appendChild(filmOverview);
 
-        addToFavorites.textContent = "Add 2 Fav";
+        addToFavorites.textContent = "Zu Favoriten hinzufügen";
         addToFavorites.classList.add("p-2", "bg-green-500", "text-white", "rounded",i);
         addToFavorites.addEventListener("click", () => {
             addToFavoritesHandler(i);
@@ -88,7 +88,7 @@ searchButton.addEventListener("click", () => {
          
           localStorage.setItem("favorites", JSON.stringify(favorites));
         
-          alert(`${nameOfFilm} has been added to your favorites!`);
+          alert(`${nameOfFilm} wurde zu den Favoriten hinzugefügt !`);
 
           
         }
