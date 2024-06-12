@@ -11,7 +11,7 @@ searchButton.addEventListener("click", () => {
   main.innerHTML = '';
   let wantedFilm = searchInput.value.trim();
 
-  if(!wantedFilm){alert("You must enter name of a Movie")}else{
+  if(!wantedFilm){alert("Sie müssen ein Name eins Films eingeben !")}else{
   const options = {
     method: 'GET',
     headers: {
@@ -88,7 +88,7 @@ searchButton.addEventListener("click", () => {
          
           localStorage.setItem("favorites", JSON.stringify(favorites));
         
-          alert(`${nameOfFilm} has been added to your favorites!`);
+          alert(`${nameOfFilm} wurde zu den Favoriten hinzugefügt !`);
 
           
         }
