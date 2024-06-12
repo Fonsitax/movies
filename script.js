@@ -25,7 +25,6 @@ searchButton.addEventListener("click", () => {
     .then((response) => {
       console.log(response);
       var allData=response;
-      localStorage.setItem("data",JSON.stringify(response));
       for (let i = 0; i < response.results.length; i++) {
         let title = response.results[i].title;
         let poster_pat = response.results[i].poster_path;
@@ -63,6 +62,7 @@ searchButton.addEventListener("click", () => {
         addToFavorites.addEventListener("click", () => {
             addToFavoritesHandler(i);
             addToFavorites.disabled = true;   //Chris - Button wird deaktiviert nachdem er einmal geklickt wurde.
+            addToFavorites.classList.replace("bg-green-500","bg-green-500/50");
           });
           film.appendChild(addToFavorites);
           
