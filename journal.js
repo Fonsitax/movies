@@ -38,6 +38,7 @@ for (let i = 0; i < favorites.length; i++) {
     filmOverview.classList.add("mb-2");
     film.appendChild(filmOverview);
 
+
     film.appendChild(removeBtnListItem);
     removeBtnListItem.appendChild(removeBtn);
     removeBtn.textContent="Von Favoriten löschen";
