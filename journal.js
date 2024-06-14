@@ -11,6 +11,8 @@ for (let i = 0; i < favorites.length; i++) {
     const filmImage = document.createElement("img");
     const filmName = document.createElement("li");
     const filmOverview = document.createElement("li");
+    const removeBtnListItem=document.createElement("li");
+    const removeBtn=document.createElement("button");
     const noteListItem = document.createElement("li");
     const note = document.createElement("input");
     const noteSaveListItem = document.createElement("li");
@@ -35,6 +37,18 @@ for (let i = 0; i < favorites.length; i++) {
     filmOverview.textContent = `Überblick : ${overview}`;
     filmOverview.classList.add("mb-2");
     film.appendChild(filmOverview);
+
+
+    film.appendChild(removeBtnListItem);
+    removeBtnListItem.appendChild(removeBtn);
+    removeBtn.textContent="Von Favoriten löschen";
+    removeBtn.classList.add("p-2", "bg-red-500", "rounded");
+    removeBtn.addEventListener("click",()=>{
+        const deletedFilm =favorites.splice(i,1);
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        alert(`Sie haben ${deletedFilm[0].Name} von Favoriten gelöscht !!`);
+        window.location.reload();
+    })
 
     const noticeDispaly=document.createElement("li");
     film.appendChild(noticeDispaly);
