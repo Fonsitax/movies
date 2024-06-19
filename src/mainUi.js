@@ -1,5 +1,5 @@
 import { addToFavoritesHandler } from './storage.js';
-
+import { favorites } from '../journal.js';
 export function updateUI(response, main) {
   const allData = response;
   for (let i = 0; i < response.results.length; i++) {
@@ -33,14 +33,20 @@ export function updateUI(response, main) {
     filmOverview.textContent = `Überblick : ${overview}`;
     filmOverview.classList.add("mb-2");
     film.appendChild(filmOverview);
-
+    const isFavorite = favorites.find(fav => fav.Name === allData.results[i].title);
+    if (!isFavorite) {
     addToFavorites.textContent = "Zu Favoriten hinzufügen";
     addToFavorites.classList.add("p-2", "bg-green-500", "text-white", "rounded", i);
     addToFavorites.addEventListener("click", () => {
       addToFavoritesHandler(i, allData);
       addToFavorites.disabled = true;
-      addToFavorites.classList.replace("bg-green-500", "bg-green-500/50");
+      addToFavorites.classList.add("p-2", "bg-green-500/50", "text-white", "rounded", i);
     });
     film.appendChild(addToFavorites);
+  }else{
+    addToFavorites.textContent = "Zu Favoriten hinzufügen";
+    addToFavorites.classList.add("p-2", "bg-green-500/50", "text-white", "rounded", i);
+    addToFavorites.disabled = true;
+    film.appendChild(addToFavorites);
   }
-}
+}}
