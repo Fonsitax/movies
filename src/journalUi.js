@@ -13,8 +13,21 @@ export function updateUI(favorites) {
         const film = document.createElement("ul");
         film.classList.add("list-none");
         newContainer.appendChild(film);
+
+        //console.log(poster_path);
+
+        if (poster_path === "https://image.tmdb.org/t/p/w500null")
+            {
+              
+              filmbild = "https://picsum.photos/id/1/5000/3333";  
+            }
+            else{
+                filmbild = poster_path;
+            }
+
+
         const filmImage = document.createElement("img");
-        filmImage.setAttribute("src", `https://image.tmdb.org/t/p/w500${poster_path}`);
+        filmImage.setAttribute("src", `${filmbild}`);
         filmImage.classList.add("mb-2", "w-40");
         film.appendChild(filmImage);
         const filmName = document.createElement("li");
