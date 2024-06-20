@@ -33,7 +33,7 @@ export function updateUI(response, main) {
     filmOverview.textContent = `Überblick : ${overview}`;
     filmOverview.classList.add("mb-2");
     film.appendChild(filmOverview);
-    const isFavorite = favorites.find(fav => fav.Name === allData.results[i].title);
+    const isFavorite = favorites.find(fav => fav.id === allData.results[i].id);
     if (!isFavorite) {
     addToFavorites.textContent = "Zu Favoriten hinzufügen";
     addToFavorites.classList.add("p-2", "bg-green-500", "text-white", "rounded", i);
