@@ -13,8 +13,19 @@ export function updateUI(favorites) {
         const film = document.createElement("ul");
         film.classList.add("list-none");
 
+        if( poster_path === null )
+            {
+             filmposter ="https://fastly.picsum.photos/id/180/2400/1600.jpg?hmac=Ig-CXcpNdmh51k3kXpNqNqcDYTwXCIaonYiBOnLXBb8";
+            }
+          else
+          {      
+            filmposter = `https://image.tmdb.org/t/p/w500/${poster_path}`;
+          }
+
+
+
         const filmImage = document.createElement("img");
-        filmImage.setAttribute("src", `https://image.tmdb.org/t/p/w500${poster_path}`);
+        filmImage.setAttribute("src", `${filmposter}`);
         filmImage.classList.add("mb-2", "w-40");
 
         const filmName = document.createElement("li");
