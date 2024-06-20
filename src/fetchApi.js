@@ -10,6 +10,9 @@ export function fetchFilmData(wantedFilm) {
         }
     };
 
-    return fetch(`${path}${pathKey}&query=${encodeURIComponent(wantedFilm)}&include_adult=false&language=en-US&page=1`, options)
-        .then(response => response.json());
+    return fetch(`${path}${pathKey}&query=${encodeURIComponent(wantedFilm)}
+    &include_adult=false&language=en-US&page=1`, options)
+        .then(response => { if (!response.ok) 
+            {throw new Error ("Fetchabruf / Serverantwort war nicht ok"); } return response.json();
+})
 }
