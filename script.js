@@ -6,9 +6,16 @@ const searchButton = document.getElementById("search-button");
 const searchInput = document.getElementById("film-search");
 const main = document.getElementById("main-content");
 
-searchButton.addEventListener("click", () => {
+searchButton.addEventListener("click", () => triggerSearch());
+searchInput.addEventListener('keydown', (event)=>{
+    if(event.key === 'Enter'){
+        triggerSearch();
+    }
+})
+
+function triggerSearch() {
     main.innerHTML = '';
-    let wantedFilm = searchInput.value.trim();
+    const wantedFilm = searchInput.value.trim();
 
     if (!wantedFilm) {
         alert("Sie müssen einen Namen eines Films eingeben!");
@@ -19,4 +26,4 @@ searchButton.addEventListener("click", () => {
             })
             .catch(err => console.error(err));
     }
-});
+}
