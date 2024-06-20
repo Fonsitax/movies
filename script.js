@@ -1,8 +1,9 @@
-const path = "https://api.themoviedb.org/3/search/movie"; 
-const pathKey = "?api_key=b9e68beed362058bc1c6f2fdd45dc2c4";
-const searchInput = document.getElementById("film-search");
+import { fetchFilmData } from './src/fetchApi.js';
+import { updateUI } from './src/mainUi.js';
+import { addToFavoritesHandler } from './src/storage.js';
+
 const searchButton = document.getElementById("search-button");
-const displayField = document.getElementById("display-field");
+const searchInput = document.getElementById("film-search");
 const main = document.getElementById("main-content");
 
 // localStorage.clear();  // Speicher komplett löschen für Tests
@@ -24,8 +25,6 @@ searchButton.addEventListener("click", () => {
     .then(response => response.json())
     .then((response) => {
       console.log(response);
-      var allData=response;
-      localStorage.setItem("data",JSON.stringify(response));
       for (let i = 0; i < response.results.length; i++) {
         let title = response.results[i].title;
         let poster_pat = response.results[i].poster_path;
@@ -40,7 +39,7 @@ searchButton.addEventListener("click", () => {
 
         newContainer.classList.add("p-4", "border", "rounded", "bg-white", "shadow", "flex", "flex-col", "items-center", "w-full", "max-w-xs");
         main.appendChild(newContainer);
-        newContainer.classList.add(i)
+        newContainer.setAttribute("id",i);
 
         film.classList.add("list-none");
         newContainer.appendChild(film);
@@ -59,41 +58,9 @@ searchButton.addEventListener("click", () => {
         film.appendChild(filmOverview);
 
         addToFavorites.textContent = "Add 2 Fav";
-        addToFavorites.classList.add("p-2", "bg-green-500", "text-white", "rounded",i);
-        addToFavorites.addEventListener("click", () => {
-            addToFavoritesHandler(i);
-            addToFavorites.disabled = true;   //Chris - Button wird deaktiviert nachdem er einmal geklickt wurde.
-          });
-          film.appendChild(addToFavorites);
-          
-        }
-        function addToFavoritesHandler(i) {
-
-  
-          const nameOfFilm=allData.results[i].title;
-          const imageOfFilm=allData.results[i].poster_path;
-          const overviewOfFilm=allData.results[i].overview;
-          const filmDetails ={
-            Name:nameOfFilm,
-            Image:`https://image.tmdb.org/t/p/w500${imageOfFilm}`,
-            overview:overviewOfFilm
-          }
-        
-          
-          const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-        
-     
-          favorites.push(filmDetails);
-        
-         
-          localStorage.setItem("favorites", JSON.stringify(favorites));
-        
-          alert(`${nameOfFilm} has been added to your favorites!`);
-
-          
-        }
-        
-      })
-      .catch(err => console.error(err));
-  }
-});
+        addToFavorites.classList.add("p-2", "bg-green-500", "text-white", "rounded");
+        film.appendChild(addToFavorites);
+      }
+    })
+    .catch(err => console.error(err));
+}})
