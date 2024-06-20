@@ -21,7 +21,18 @@ export function updateUI(response, main) {
     film.classList.add("list-none");
     newContainer.appendChild(film);
 
-    filmImage.setAttribute("src", `https://image.tmdb.org/t/p/w500${poster_pat}`);
+    if( poster_pat === null )
+      {
+          
+       filmImage.setAttribute("src", "https://fastly.picsum.photos/id/180/2400/1600.jpg?hmac=Ig-CXcpNdmh51k3kXpNqNqcDYTwXCIaonYiBOnLXBb8");
+      }
+    else
+    {
+      
+      filmImage.setAttribute("src", `https://image.tmdb.org/t/p/w500${poster_pat}`);
+    }
+
+   
     imageListItem.appendChild(filmImage);
     filmImage.classList.add("mb-2", "w-40");
     film.appendChild(imageListItem);
