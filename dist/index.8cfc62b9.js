@@ -590,54 +590,18 @@ var _storageJs = require("./src/storage.js");
 const searchButton = document.getElementById("search-button");
 const searchInput = document.getElementById("film-search");
 const main = document.getElementById("main-content");
-// localStorage.clear();  // Speicher komplett löschen für Tests
-searchButton.addEventListener("click", ()=>{
-    main.innerHTML = "";
-    let wantedFilm = searchInput.value.trim();
-    if (!wantedFilm) alert("You must enter name of a Movie");
-    else {
-        const options = {
-            method: "GET",
-            headers: {
-                accept: "application/json",
-                Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOWU2OGJlZWQzNjIwNThiYzFjNmYyZmRkNDVkYzJjNCIsInN1YiI6IjY2NjcwNmRmZTcxMDM0MDEwZmJlNzUzZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BcaQgxzIuDO3FyhIu6OgG0nkgol6PlSAiC1LxLlReus"
-            }
-        };
-        fetch(`${path}${pathKey}&query=${encodeURIComponent(wantedFilm)}&include_adult=false&language=en-US&page=1`, options).then((response)=>response.json()).then((response)=>{
-            console.log(response);
-            for(let i = 0; i < response.results.length; i++){
-                let title = response.results[i].title;
-                let poster_pat = response.results[i].poster_path;
-                let overview = response.results[i].overview;
-                const newContainer = document.createElement("div");
-                const film = document.createElement("ul");
-                const imageListItem = document.createElement("li");
-                const filmImage = document.createElement("img");
-                const filmName = document.createElement("li");
-                const filmOverview = document.createElement("li");
-                const addToFavorites = document.createElement("button");
-                newContainer.classList.add("p-4", "border", "rounded", "bg-white", "shadow", "flex", "flex-col", "items-center", "w-full", "max-w-xs");
-                main.appendChild(newContainer);
-                newContainer.setAttribute("id", i);
-                film.classList.add("list-none");
-                newContainer.appendChild(film);
-                filmImage.setAttribute("src", `https://image.tmdb.org/t/p/w500${poster_pat}`);
-                imageListItem.appendChild(filmImage);
-                filmImage.classList.add("mb-2", "w-40");
-                film.appendChild(imageListItem);
-                filmName.textContent = `Title : ${title}`;
-                film.appendChild(filmName);
-                filmName.classList.add("mb-2");
-                filmOverview.textContent = `Overview : ${overview}`;
-                filmOverview.classList.add("mb-2");
-                film.appendChild(filmOverview);
-                addToFavorites.textContent = "Add 2 Fav";
-                addToFavorites.classList.add("p-2", "bg-green-500", "text-white", "rounded");
-                film.appendChild(addToFavorites);
-            }
-        }).catch((err)=>console.error(err));
-    }
+searchButton.addEventListener("click", ()=>triggerSearch());
+searchInput.addEventListener("keydown", (event)=>{
+    if (event.key === "Enter") triggerSearch();
 });
+function triggerSearch() {
+    main.innerHTML = "";
+    const wantedFilm = searchInput.value.trim();
+    if (!wantedFilm) alert("Sie m\xfcssen einen Namen eines Films eingeben!");
+    else (0, _fetchApiJs.fetchFilmData)(wantedFilm).then((response)=>{
+        (0, _mainUiJs.updateUI)(response, main);
+    }).catch((err)=>console.error(err));
+}
 
 },{"./src/fetchApi.js":"4iC4y","./src/mainUi.js":"579JF","./src/storage.js":"bkDau"}],"4iC4y":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -653,7 +617,11 @@ function fetchFilmData(wantedFilm) {
             Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOWU2OGJlZWQzNjIwNThiYzFjNmYyZmRkNDVkYzJjNCIsInN1YiI6IjY2NjcwNmRmZTcxMDM0MDEwZmJlNzUzZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BcaQgxzIuDO3FyhIu6OgG0nkgol6PlSAiC1LxLlReus"
         }
     };
-    return fetch(`${path}${pathKey}&query=${encodeURIComponent(wantedFilm)}&include_adult=false&language=en-US&page=1`, options).then((response)=>response.json());
+    return fetch(`${path}${pathKey}&query=${encodeURIComponent(wantedFilm)}
+    &include_adult=false&language=en-US&page=1`, options).then((response)=>{
+        if (!response.ok) throw new Error("Fetchabruf / Serverantwort war nicht ok");
+        return response.json();
+    });
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"579JF":[function(require,module,exports) {
@@ -675,21 +643,39 @@ function updateUI(response, main) {
         const filmName = document.createElement("li");
         const filmOverview = document.createElement("li");
         const addToFavorites = document.createElement("button");
+        const expandButton = document.createElement("button");
+        const overviewContainer = document.createElement("div");
         newContainer.classList.add("p-4", "border", "rounded", "bg-white", "shadow", "flex", "flex-col", "items-center", "w-full", "max-w-xs");
         main.appendChild(newContainer);
-        newContainer.classList.add(i);
         film.classList.add("list-none");
         newContainer.appendChild(film);
-        filmImage.setAttribute("src", `https://image.tmdb.org/t/p/w500${poster_pat}`);
+        if (poster_pat === null) filmImage.setAttribute("src", "https://fastly.picsum.photos/id/180/2400/1600.jpg?hmac=Ig-CXcpNdmh51k3kXpNqNqcDYTwXCIaonYiBOnLXBb8");
+        else filmImage.setAttribute("src", `https://image.tmdb.org/t/p/w500${poster_pat}`);
         imageListItem.appendChild(filmImage);
         filmImage.classList.add("mb-2", "w-40");
         film.appendChild(imageListItem);
+        overviewContainer.classList.add("mb-2", "overflow-hidden", "max-h-0", "transition-max-height", "duration-500", "ease-in-out");
         filmName.textContent = `Title : ${title}`;
         film.appendChild(filmName);
         filmName.classList.add("mb-2");
         filmOverview.textContent = `\xdcberblick : ${overview}`;
         filmOverview.classList.add("mb-2");
-        film.appendChild(filmOverview);
+        overviewContainer.appendChild(filmOverview);
+        film.appendChild(overviewContainer);
+        expandButton.textContent = "Mehr erfahren";
+        expandButton.classList.add("p-2", "bg-blue-500", "text-white", "rounded");
+        expandButton.addEventListener("click", ()=>{
+            if (overviewContainer.classList.contains("max-h-0")) {
+                overviewContainer.classList.remove("max-h-0");
+                overviewContainer.classList.add("max-h-96");
+                expandButton.textContent = "Weniger anzeigen";
+            } else {
+                overviewContainer.classList.remove("max-h-96");
+                overviewContainer.classList.add("max-h-0");
+                expandButton.textContent = "Mehr erfahren";
+            }
+        });
+        film.appendChild(expandButton);
         const isFavorite = (0, _journalJs.favorites).find((fav)=>fav.id === allData.results[i].id);
         if (!isFavorite) {
             addToFavorites.textContent = "Zu Favoriten hinzuf\xfcgen";

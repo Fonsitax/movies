@@ -1,7 +1,9 @@
 import { addToFavoritesHandler } from './storage.js';
 import { favorites } from '../journal.js';
+
 export function updateUI(response, main) {
   const allData = response;
+  
   for (let i = 0; i < response.results.length; i++) {
     let title = response.results[i].title;
     let poster_pat = response.results[i].poster_path;
@@ -15,35 +17,34 @@ export function updateUI(response, main) {
     const addToFavorites = document.createElement("button");
     const expandButton = document.createElement("button");
     const overviewContainer = document.createElement("div");
-    
 
     newContainer.classList.add("p-4", "border", "rounded", "bg-white", "shadow", "flex", "flex-col", "items-center", "w-full", "max-w-xs");
     main.appendChild(newContainer);
-    newContainer.classList.add(i)
 
     film.classList.add("list-none");
     newContainer.appendChild(film);
 
-    if( poster_pat === null )
-      {
-          
-       filmImage.setAttribute("src", "https://fastly.picsum.photos/id/180/2400/1600.jpg?hmac=Ig-CXcpNdmh51k3kXpNqNqcDYTwXCIaonYiBOnLXBb8");
-      }
-    else
-    {
-      
+    if (poster_pat === null) {
+      filmImage.setAttribute("src", "https://fastly.picsum.photos/id/180/2400/1600.jpg?hmac=Ig-CXcpNdmh51k3kXpNqNqcDYTwXCIaonYiBOnLXBb8");
+    } else {
       filmImage.setAttribute("src", `https://image.tmdb.org/t/p/w500${poster_pat}`);
     }
 
-   
     imageListItem.appendChild(filmImage);
     filmImage.classList.add("mb-2", "w-40");
     film.appendChild(imageListItem);
 
     overviewContainer.classList.add("mb-2", "overflow-hidden", "max-h-0", "transition-max-height", "duration-500", "ease-in-out");
+    
+
+    filmName.textContent = `Title : ${title}`;
+    film.appendChild(filmName);
+    filmName.classList.add("mb-2");
+
+    filmOverview.textContent = `Überblick : ${overview}`;
+    filmOverview.classList.add("mb-2");
     overviewContainer.appendChild(filmOverview);
     film.appendChild(overviewContainer);
-
     expandButton.textContent = "Mehr erfahren";
     expandButton.classList.add("p-2", "bg-blue-500", "text-white", "rounded");
     expandButton.addEventListener("click", () => {
@@ -59,28 +60,21 @@ export function updateUI(response, main) {
     });
     film.appendChild(expandButton);
 
-    
-    filmName.textContent = `Title : ${title}`;
-    film.appendChild(filmName);
-    filmName.classList.add("mb-2");
-
-    filmOverview.textContent = `Überblick : ${overview}`;
-    filmOverview.classList.add("mb-2");
-    film.appendChild(filmOverview);
     const isFavorite = favorites.find(fav => fav.id === allData.results[i].id);
     if (!isFavorite) {
-    addToFavorites.textContent = "Zu Favoriten hinzufügen";
-    addToFavorites.classList.add("p-2", "bg-green-500", "text-white", "rounded", i);
-    addToFavorites.addEventListener("click", () => {
-      addToFavoritesHandler(i, allData);
-      addToFavorites.disabled = true;
+      addToFavorites.textContent = "Zu Favoriten hinzufügen";
+      addToFavorites.classList.add("p-2", "bg-green-500", "text-white", "rounded", i);
+      addToFavorites.addEventListener("click", () => {
+        addToFavoritesHandler(i, allData);
+        addToFavorites.disabled = true;
+        addToFavorites.classList.add("p-2", "bg-green-500/50", "text-white", "rounded", i);
+      });
+      film.appendChild(addToFavorites);
+    } else {
+      addToFavorites.textContent = "Zu Favoriten hinzufügen";
       addToFavorites.classList.add("p-2", "bg-green-500/50", "text-white", "rounded", i);
-    });
-    film.appendChild(addToFavorites);
-  }else{
-    addToFavorites.textContent = "Zu Favoriten hinzufügen";
-    addToFavorites.classList.add("p-2", "bg-green-500/50", "text-white", "rounded", i);
-    addToFavorites.disabled = true;
-    film.appendChild(addToFavorites);
+      addToFavorites.disabled = true;
+      film.appendChild(addToFavorites);
+    }
   }
-}}
+}
