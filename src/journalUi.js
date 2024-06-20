@@ -9,9 +9,10 @@ export function updateUI(favorites) {
         
         const newContainer = document.createElement("div");
         newContainer.classList.add("p-4", "border", "rounded", "bg-white", "shadow", "flex", "flex-col", "items-center", "w-full", "max-w-xs");
-        
+        main.appendChild(newContainer);
         const film = document.createElement("ul");
         film.classList.add("list-none");
+
 
         if( poster_path === null )
             {
@@ -24,20 +25,43 @@ export function updateUI(favorites) {
 
 
 
+
+        newContainer.appendChild(film);
+
         const filmImage = document.createElement("img");
         filmImage.setAttribute("src", `${filmposter}`);
         filmImage.classList.add("mb-2", "w-40");
-
+        film.appendChild(filmImage);
         const filmName = document.createElement("li");
         filmName.textContent = `Title : ${title}`;
         filmName.classList.add("mb-2");
-
+        film.appendChild(filmName);
         const filmOverview = document.createElement("li");
         filmOverview.textContent = `Überblick : ${overview}`;
         filmOverview.classList.add("mb-2");
-
+        film.appendChild(filmOverview);
         const removeBtnListItem = document.createElement("li");
         const removeBtn = document.createElement("button");
+        const expandButton = document.createElement("button");
+        const overviewContainer = document.createElement("div");
+        overviewContainer.appendChild(filmOverview);
+        overviewContainer.classList.add("mb-2", "overflow-hidden", "max-h-0", "transition-max-height", "duration-500", "ease-in-out");
+        
+        film.appendChild(overviewContainer);
+        expandButton.textContent = "Mehr erfahren";
+        expandButton.classList.add("p-2", "bg-blue-500", "text-white", "rounded");
+        expandButton.addEventListener("click", () => {
+        if (overviewContainer.classList.contains("max-h-0")) {
+            overviewContainer.classList.remove("max-h-0");
+            overviewContainer.classList.add("max-h-96");
+            expandButton.textContent = "Weniger anzeigen";
+        } else {
+            overviewContainer.classList.remove("max-h-96");
+            overviewContainer.classList.add("max-h-0");
+            expandButton.textContent = "Mehr erfahren";
+        }
+        });
+        film.appendChild(expandButton);
         removeBtn.textContent = "Von Favoriten löschen";
         removeBtn.classList.add("p-2", "bg-red-500", "rounded");
         removeBtn.addEventListener("click", () => {
@@ -51,9 +75,12 @@ export function updateUI(favorites) {
         const note = document.createElement("input");
         note.classList.add("p-2", "h-28", "mb-4", "mt-4", "rounded");
         note.placeholder = "Notiz hinzufügen";
-
+        film.appendChild(noteListItem);
+        noteListItem.appendChild(note);
         const noteSaveListItem = document.createElement("li");
         const noteSave = document.createElement("button");
+        film.appendChild(noteSaveListItem);
+        noteSaveListItem.appendChild(noteSave);
         noteSave.textContent = "Notiz speichern";
         noteSave.classList.add("p-2", "bg-green-500", "rounded");
         noteSave.addEventListener("click", () => {
@@ -69,9 +96,6 @@ export function updateUI(favorites) {
 
         const noticeDisplay = document.createElement("li");
         noticeDisplay.classList.add("m-4");
-        film.append(filmImage, filmName, filmOverview, removeBtnListItem, noteListItem, noteSaveListItem, noticeDisplay);
-        newContainer.appendChild(film);
-        main.appendChild(newContainer);
         if (notice) {
             noteSave.textContent = "Notiz-Bearbeitung speichern";
             note.value = notice;
