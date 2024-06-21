@@ -1,4 +1,4 @@
-import { favorites } from "../journal.js";
+const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 export function deleteNotice(i){
     delete favorites[i].notice;
     window.location.reload();

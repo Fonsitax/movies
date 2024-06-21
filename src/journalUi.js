@@ -15,7 +15,9 @@ export function updateUI(favorites) {
         newContainer.appendChild(film);
 
         //console.log(poster_path);
-    
+
+        let filmbild = "";
+
         if (poster_path === "https://image.tmdb.org/t/p/w500null")
             {
              
