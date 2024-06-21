@@ -94,6 +94,13 @@ export function updateUI(favorites) {
 
         const noticeDisplay = document.createElement("li");
         noticeDisplay.classList.add("m-4");
+
+        
+       
+        
+        
+
+
         if (notice) {
             noteSave.textContent = "Notiz-Bearbeitung speichern";
             note.value = notice;
@@ -111,12 +118,14 @@ export function updateUI(favorites) {
             film.appendChild(deleteNoticeBtnListItem);
         }
 
+        film.append(removeBtnListItem);
         removeBtnListItem.appendChild(removeBtn);
+        
         noteListItem.appendChild(note);
         noteSaveListItem.appendChild(noteSave);
 
         
-        newContainer.appendChild(film);
-        main.appendChild(newContainer);
+        //newContainer.appendChild(film);
+        //main.appendChild(newContainer);
     }
 }
