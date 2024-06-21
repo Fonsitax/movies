@@ -63,7 +63,7 @@ export function updateUI(response, main) {
     const isFavorite = favorites.find(fav => fav.id === allData.results[i].id);
     if (!isFavorite) {
       addToFavorites.textContent = "Zu Favoriten hinzufügen";
-      addToFavorites.classList.add("p-2", "bg-green-500", "text-white", "rounded", i);
+      addToFavorites.classList.add("p-2", "bg-grey-800", "text-white", "rounded", i);
       addToFavorites.addEventListener("click", () => {
         addToFavoritesHandler(i, allData);
         addToFavorites.disabled = true;
