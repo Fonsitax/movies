@@ -25,7 +25,7 @@ export function updateUI(response, main) {
     newContainer.appendChild(film);
 
     if (poster_pat === null) {
-      filmImage.setAttribute("src", "https://fastly.picsum.photos/id/180/2400/1600.jpg?hmac=Ig-CXcpNdmh51k3kXpNqNqcDYTwXCIaonYiBOnLXBb8");
+      filmImage.setAttribute("src", "https://picsum.photos/id/1/5000/3333");
     } else {
       filmImage.setAttribute("src", `https://image.tmdb.org/t/p/w500${poster_pat}`);
     }
