@@ -15,10 +15,10 @@ export function updateUI(favorites) {
         newContainer.appendChild(film);
 
         //console.log(poster_path);
-
+    
         if (poster_path === "https://image.tmdb.org/t/p/w500null")
             {
-              
+             
               filmbild = "https://picsum.photos/id/1/5000/3333";  
             }
             else{
