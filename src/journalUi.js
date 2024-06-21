@@ -47,7 +47,7 @@ export function updateUI(favorites) {
         
         film.appendChild(overviewContainer);
         expandButton.textContent = "Mehr erfahren";
-        expandButton.classList.add("p-2", "bg-blue-500", "text-white", "rounded");
+        expandButton.classList.add("p-2", "bg-gray-800", "text-white", "rounded");
         expandButton.addEventListener("click", () => {
         if (overviewContainer.classList.contains("max-h-0")) {
             overviewContainer.classList.remove("max-h-0");
