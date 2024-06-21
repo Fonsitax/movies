@@ -1,9 +1,8 @@
 import { addToFavoritesHandler } from './storage.js';
-import { favorites } from '../journal.js';
 
 export function updateUI(response, main) {
   const allData = response;
-  
+  const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
   for (let i = 0; i < response.results.length; i++) {
     let title = response.results[i].title;
     let poster_pat = response.results[i].poster_path;
